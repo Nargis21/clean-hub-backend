@@ -207,6 +207,11 @@ async function run() {
             res.send(result)
         })
 
+        app.get('/reviews', async (req, res) => {
+            const reviews = await reviewCollection.find().toArray()
+            res.send(reviews)
+        })
+
         app.get('/review/:email', async (req, res) => {
             const userEmail = req.params.email
             const query = { email: userEmail }
