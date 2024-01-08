@@ -219,19 +219,19 @@ async function run() {
             res.send(reviews)
         })
 
-        app.patch('/review/:id', verifyJWT, async (req, res) => {
-            const id = req.params.id
-            const filter = { _id: ObjectId(id) }
-            const existingReview = await reviewCollection.findOne(filter);
-            const updatedStatus = !existingReview?.status;
-            const updatedDoc = {
-                $set: {
-                    status: updatedStatus,
-                }
-            }
-            const updatedReview = await reviewCollection.updateOne(filter, updatedDoc)
-            res.send(updatedReview)
-        })
+        // app.patch('/review/:id', verifyJWT, async (req, res) => {
+        //     const id = req.params.id
+        //     const filter = { _id: ObjectId(id) }
+        //     const existingReview = await reviewCollection.findOne(filter);
+        //     const updatedStatus = !existingReview?.status;
+        //     const updatedDoc = {
+        //         $set: {
+        //             status: updatedStatus,
+        //         }
+        //     }
+        //     const updatedReview = await reviewCollection.updateOne(filter, updatedDoc)
+        //     res.send(updatedReview)
+        // })
 
         app.delete('/review/:id', verifyJWT, async (req, res) => {
             const id = req.params.id
