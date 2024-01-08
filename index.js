@@ -223,7 +223,7 @@ async function run() {
             const id = req.params.id
             const filter = { _id: ObjectId(id) }
             const existingReview = await reviewCollection.findOne(filter);
-            const updatedStatus = !existingReview.status;
+            const updatedStatus = !existingReview?.status;
             const updatedDoc = {
                 $set: {
                     status: updatedStatus,
