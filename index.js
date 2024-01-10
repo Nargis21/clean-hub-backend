@@ -107,7 +107,7 @@ async function run() {
             res.send(user)
         })
 
-        app.delete('/user/:id', verifyJWT, async (req, res) => {
+        app.delete('/user/:id', async (req, res) => {
             const id = req.params.id
             const query = { _id: ObjectId(id) }
             const result = await userCollection.deleteOne(query)
@@ -115,7 +115,7 @@ async function run() {
 
         })
 
-        app.post('/services', verifyJWT, async (req, res) => {
+        app.post('/services', async (req, res) => {
             const service = req.body
             const result = await serviceCollection.insertOne(service)
             res.send(result)
@@ -133,7 +133,7 @@ async function run() {
             res.send(service)
         })
 
-        app.delete('/services/:id', verifyJWT, async (req, res) => {
+        app.delete('/services/:id', async (req, res) => {
             const id = req.params.id
             const query = { _id: ObjectId(id) }
             const result = await serviceCollection.deleteOne(query)
@@ -141,7 +141,7 @@ async function run() {
 
         })
 
-        app.post('/bookings', verifyJWT, async (req, res) => {
+        app.post('/bookings', async (req, res) => {
             const booking = req.body
             const result = await bookingCollection.insertOne(booking)
             res.send(result)
@@ -182,7 +182,7 @@ async function run() {
             res.send(updatedOrder)
         })
 
-        app.patch('/bookings/:id', verifyJWT, async (req, res) => {
+        app.patch('/bookings/:id', async (req, res) => {
             const id = req.params.id
             const filter = { _id: ObjectId(id) }
             const updatedDoc = {
@@ -194,14 +194,14 @@ async function run() {
             res.send(updatedBooking)
         })
 
-        app.delete('/bookings/:id', verifyJWT, async (req, res) => {
+        app.delete('/bookings/:id', async (req, res) => {
             const id = req.params.id
             const query = { _id: ObjectId(id) }
             const result = await bookingCollection.deleteOne(query)
             res.send(result)
         })
 
-        app.post('/review', verifyJWT, async (req, res) => {
+        app.post('/review', async (req, res) => {
             const review = req.body
             const result = await reviewCollection.insertOne(review)
             res.send(result)
@@ -212,14 +212,14 @@ async function run() {
             res.send(reviews)
         })
 
-        app.get('/review/:email', async (req, res) => {
+        app.get('/reviews/:email', async (req, res) => {
             const userEmail = req.params.email
             const query = { email: userEmail }
             const reviews = await reviewCollection.find(query).toArray()
             res.send(reviews)
         })
 
-        app.patch('/review/:id', verifyJWT, async (req, res) => {
+        app.patch('/review/:id', async (req, res) => {
             const id = req.params.id
             const filter = { _id: ObjectId(id) }
             const existingReview = await reviewCollection.findOne(filter);
@@ -233,7 +233,7 @@ async function run() {
             res.send(updatedReview)
         })
 
-        app.delete('/review/:id', verifyJWT, async (req, res) => {
+        app.delete('/review/:id', async (req, res) => {
             const id = req.params.id
             const query = { _id: ObjectId(id) }
             const result = await reviewCollection.deleteOne(query)
