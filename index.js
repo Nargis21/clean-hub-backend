@@ -152,34 +152,11 @@ async function run() {
             res.send(bookings)
         })
 
-        app.get('/order/:id', verifyJWT, async (req, res) => {
-            const id = req.params.id
-            const query = { _id: ObjectId(id) }
-            const order = await orderCollection.findOne(query)
-            res.send(order)
-        })
-
         app.get('/booking/:email', async (req, res) => {
             const userEmail = req.params.email
             const query = { email: userEmail }
             const bookings = await bookingCollection.find(query).toArray()
             res.send(bookings)
-        })
-
-        app.patch('/order/:id', verifyJWT, async (req, res) => {
-            const id = req.params.id
-            const payment = req.body
-            const filter = { _id: ObjectId(id) }
-            const updatedDoc = {
-                $set: {
-                    paid: true,
-                    status: 'Pending',
-                    transactionId: payment.transactionId
-                }
-            }
-            const result = await paymentCollection.insertOne(payment)
-            const updatedOrder = await orderCollection.updateOne(filter, updatedDoc)
-            res.send(updatedOrder)
         })
 
         app.patch('/bookings/:id', async (req, res) => {
@@ -239,20 +216,6 @@ async function run() {
             const result = await reviewCollection.deleteOne(query)
             res.send(result)
         })
-
-        app.post('/create-payment-intent', verifyJWT, async (req, res) => {
-            const service = req.body
-            const price = service.totalPrice
-            const amount = price * 100
-            const paymentIntent = await stripe.paymentIntents.create({
-                amount: amount,
-                currency: "usd",
-                payment_method_types: ['card']
-            });
-            res.send({
-                clientSecret: paymentIntent.client_secret,
-            });
-        })
     }
     finally {
     }
@@ -261,7 +224,7 @@ async function run() {
 run().catch(console.dir)
 
 app.get('/', (req, res) => {
-    res.send('Hello From Paint Pro!')
+    res.send('Hello From Clean Hub!')
 })
 
 app.listen(port, () => {
